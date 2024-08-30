@@ -14,6 +14,10 @@ const registerValidation = (data) => {
         password: Joi.string()
             .min(8)
             .required(),
+
+            role: Joi.string()
+            .min(4)
+            .required(),
         
         date: Joi.date()
             .default(Date.now),

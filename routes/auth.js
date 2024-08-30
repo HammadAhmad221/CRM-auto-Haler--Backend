@@ -2,7 +2,7 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {registerValidation, loginValidation} = require('../validations.js');
-const User = require('../models/UserModel');
+const User = require('../models/User');
 
 // Routers
 router.post('/register', async (req, res) => {
@@ -23,7 +23,7 @@ router.post('/register', async (req, res) => {
     const user = User({
        email: req.body.email,
        name: req.body.name,
-       password: hashedPassword
+       password: hashedPassword,
     });
 
     try {
@@ -49,8 +49,8 @@ router.post('/login', async (req, res) => {
     if(!passwordMatch) return res.status(400).send('Email or Password do not match');
 
     // Create and assign JWT
-    const token = jwt.sign({_id: registeredUser._id}, process.env.JWT_SECRET);
-    res.header('auth-token', token).send(token);
+    const token = jwt.sign({_id: registeredUser._id,  role: registeredUser.role}, process.env.JWT_SECRET);
+    res.header('Authorization', token).send(token);
 })
 
 module.exports = router

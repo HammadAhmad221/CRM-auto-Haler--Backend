@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 
-
 const UserSchema = new mongoose.Schema({
-    email : {
+    email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     name: {
         type: String,
@@ -13,15 +12,17 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
+    role: { 
+        type: String, 
+        enum: ['Admin', 'Driver', 'Customer'], 
+        default: 'Customer' 
+      },
     date: {
         type: Date,
         default: Date.now
     }
-
-    // Add more fields here
-    
-})
+});
 
 module.exports = mongoose.model('User', UserSchema);
