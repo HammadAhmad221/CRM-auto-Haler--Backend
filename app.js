@@ -25,15 +25,15 @@ app.use(limiter);
 
 // -> Route Middlewares
 app.use("/api/user", authRoutes);
-app.use('/api/vehicle', vehicleRoutes);
-app.use('/api/quote', quoteRoutes);
-app.use('/api/invoice', invoiceRoutes);
-app.use('/api/load', loadRoutes);
-app.use('/api/communication-log', communicationLogRoutes);
-app.use('/api/condition-report', conditionReportRoutes);
-app.use('/api/driver', driverRoutes);
+app.use('/api/vehicles', vehicleRoutes);
+app.use('/api/quotes', quoteRoutes);
+app.use('/api/invoices', invoiceRoutes);
+app.use('/api/loads', loadRoutes);
+app.use('/api/communication-logs', communicationLogRoutes);
+app.use('/api/condition-reports', conditionReportRoutes);
+app.use('/api/drivers', driverRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/customer',customerRoutes);
+app.use('/api/customers',customerRoutes);
 
 mongoose.set('strictQuery', true);
 

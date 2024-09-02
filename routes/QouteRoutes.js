@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const Quote = require('../models/Qoute');
+// const authenticateUser = require('../middlewares/verifyToken');
+
 
 // Create a new quote
 router.post('/', async (req, res) => {

@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const Vehicle = require('../models/Vehicle');
+// const authenticateUser = require('../middlewares/verifyToken');
+
 
 // Create a new vehicle
 router.post('/add', async (req, res) => {

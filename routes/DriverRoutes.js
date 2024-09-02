@@ -3,6 +3,7 @@ const Driver = require('../models/Driver');
 const authenticateUser = require('../middlewares/verifyToken');
 
 
+
 // Create a new driver
 router.post('/', authenticateUser(['Admin']), async (req, res) => {
   const { name, licenseNumber, certifications, contactDetails } = req.body;

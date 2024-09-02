@@ -44,7 +44,7 @@ router.post('/', authenticateUser(['Admin']), async (req, res) => {
 });
 
 // Update a customer by ID (Update)
-router.patch('/:id', authenticateUser(['Admin']), async (req, res) => {
+router.put('/:id', authenticateUser(['Admin']), async (req, res) => {
   try {
     const updatedCustomer = await Customer.findByIdAndUpdate(
       req.params.id,

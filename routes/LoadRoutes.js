@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const Load = require('../models/Load');
+// const authenticateUser = require('../middlewares/verifyToken');
+
 
 // Create a new load
 router.post('/', async (req, res) => {

@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const Invoice = require('../models/Invoice');
+// const authenticateUser = require('../middlewares/verifyToken');
+
 
 // Create a new invoice
 router.post('/', async (req, res) => {
