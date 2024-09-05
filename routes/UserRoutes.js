@@ -1,16 +1,16 @@
 const router = require('express').Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
-const {registerValidation} = require('../validations.js');
+// const {registerValidation} = require('../validations.js');
 const authenticateUser = require('../middlewares/verifyToken');
 
-router.post('/add', authenticateUser(['Admin']), async (req, res) => {
+router.post('/', authenticateUser(['Admin']), async (req, res) => {
   const { email, name, password, role } = req.body;
 
   try {
         // Validation check
-        const {error} = registerValidation(req.body);
-        if(error) return res.status(400).send(error.details[0].message);
+        // const {error} = registerValidation(req.body);
+        // if(error) return res.status(400).send(error.details[0].message);
     
         // Email uniqueness check
         const emailExists = await User.findOne({email: req.body.email});

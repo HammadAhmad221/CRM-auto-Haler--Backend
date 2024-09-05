@@ -17,6 +17,7 @@ const conditionReportRoutes = require('./routes/ConditionReportRoutes');
 const driverRoutes = require('./routes/DriverRoutes');
 const userRoutes = require('./routes/UserRoutes');
 const customerRoutes = require('./routes/CustomerRoutes');
+const counts = require('./routes/counts')
 
 // -> Middlewares
 app.use(cors());
@@ -29,11 +30,13 @@ app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/quotes', quoteRoutes);
 app.use('/api/invoices', invoiceRoutes);
 app.use('/api/loads', loadRoutes);
-app.use('/api/communication-logs', communicationLogRoutes);
+app.use('/api/communicationLogs', communicationLogRoutes);
 app.use('/api/condition-reports', conditionReportRoutes);
 app.use('/api/drivers', driverRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/customers',customerRoutes);
+app.use('/api/counts', counts );
+
 
 mongoose.set('strictQuery', true);
 

@@ -8,7 +8,7 @@ const DriverSchema = new mongoose.Schema({
     licenseNumber: {
         type: String,
         required: true,
-        unique: true,
+        // unique: true,
     },
     certifications: {
         type: [String],

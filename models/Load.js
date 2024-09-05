@@ -24,7 +24,7 @@ const LoadSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum:['Assigned', 'In Transit', 'Delivered'],
+        enum:['Assigned', 'In Progress', 'Delivered'],
         default: 'Assigned',
     },
     date: {

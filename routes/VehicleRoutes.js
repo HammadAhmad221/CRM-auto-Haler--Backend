@@ -4,7 +4,7 @@ const Vehicle = require('../models/Vehicle');
 
 
 // Create a new vehicle
-router.post('/add', async (req, res) => {
+router.post('/', async (req, res) => {
   const { make, model, year, vin, specialInstructions, status, conditionReport  } = req.body;
 
   try {

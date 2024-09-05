@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const customerSchema = new mongoose.Schema({
   name: { type: String, required: true },
   phone: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true,
+    //  unique: true
+     },
   address: {
     street: String,
     city: String,
@@ -21,7 +23,7 @@ const customerSchema = new mongoose.Schema({
   leads: [
     {
       leadSource: String,
-      status: { type: String, enum: ['new', 'contacted', 'qualified', 'converted', 'unqualified'] },
+      status: { type: String, enum: ['new', 'contacted', 'qualified', 'converted', 'unqualified'], default:'new'},
       followUpDate: Date,
     },
   ],
