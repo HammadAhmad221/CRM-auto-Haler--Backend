@@ -16,7 +16,7 @@ const QuoteSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum:['Pending', 'Approved', 'Rejected'],
+        // enum:['Pending', 'Approved', 'Rejected'],
         default: 'Pending',
     },
     date: {

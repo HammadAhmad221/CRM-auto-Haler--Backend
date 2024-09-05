@@ -8,7 +8,7 @@ const CommunicationLogSchema = new mongoose.Schema({
     },
     communicationType: {
         type: String,
-        enum:['Email', 'Phone', 'SMS'],
+        // enum:['Email', 'Phone', 'SMS'],
         required: true,
     },
     message: {
