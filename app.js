@@ -22,7 +22,7 @@ const counts = require('./routes/counts')
 // -> Middlewares
 app.use(cors());
 app.use(express.json());
-app.use(limiter);
+// app.use(limiter);
 
 // -> Route Middlewares
 app.use("/api/user", authRoutes);
