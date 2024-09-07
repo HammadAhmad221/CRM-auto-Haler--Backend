@@ -1,18 +1,26 @@
 const mongoose = require('mongoose');
 
-const ConditionReportSchema = new mongoose.Schema({
-    vehicleId: {
+const ConditionReport = new mongoose.Schema({
+    driverId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Vehicle',
+        ref: 'Driver',
         required: true,
     },
-    date: {
+    loadId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Load',
+        required: true,
+    },
+    pickupConditionPhotos: {
+        type: [String], // Array of file paths
+    },
+    deliveryConditionPhotos: {
+        type: [String], // Array of file paths
+    },
+    reportDate: {
         type: Date,
         default: Date.now,
     },
-    report: {
-        type: String, // Details about the vehicle's condition
-    }
 });
 
-module.exports = mongoose.model('ConditionReport', ConditionReportSchema);
+module.exports = mongoose.model('ConditionReport', ConditionReport);

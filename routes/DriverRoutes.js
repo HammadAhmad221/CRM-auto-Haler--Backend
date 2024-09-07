@@ -34,7 +34,7 @@ router.get('/',authenticateUser(['Admin']), async (req, res) => {
 });
 
 // Get a single driver by ID
-router.get('/:id',authenticateUser(['Admin']), async (req, res) => {
+router.get('/:id',authenticateUser(['Admin','Driver']), async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -48,7 +48,7 @@ router.get('/:id',authenticateUser(['Admin']), async (req, res) => {
 });
 
 // Update a driver by ID
-router.put('/:id', authenticateUser(['Admin']), async (req, res) => {
+router.put('/:id', authenticateUser(['Admin','Driver']), async (req, res) => {
   const { id } = req.params;
   const { name, licenseNumber, certifications, contactDetails } = req.body;
 
@@ -86,6 +86,19 @@ router.delete('/:id',authenticateUser(['Admin']), async (req, res) => {
     res.status(200).json({ message: 'Driver deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+router.get('/id-by-license/:licenseNumber', async (req, res) => {
+  try {
+      const driver = await Driver.findOne({ licenseNumber: req.params.licenseNumber });
+      if (!driver) {
+          return res.status(404).json({ message: 'Driver not found' });
+      }
+      res.json({ driverId: driver._id });
+  } catch (error) {
+      console.error('Error fetching driver by license number:', error);
+      res.status(500).json({ message: 'Server error' });
   }
 });
 
