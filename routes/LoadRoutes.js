@@ -82,4 +82,32 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// Create a load based on an approved quote
+router.post('/from-quote/:quoteId', async (req, res) => {
+  const { quoteId } = req.params;
+  const { driverId, pickupLocation, deliveryLocation } = req.body;
+
+  try {
+    const quote = await Quote.findById(quoteId);
+    if (!quote || quote.status !== 'Approved') {
+      return res.status(400).json({ message: 'Quote not found or not approved' });
+    }
+
+    // Create a new Load based on the approved quote
+    const newLoad = new Load({
+      vehicleId: quote.vehicleId,
+      driverId,
+      pickupLocation,
+      deliveryLocation,
+      loadDetails: `Load created from quote ID ${quoteId}`,
+      status: 'Assigned', // Or whatever initial status you use
+    });
+
+    const savedLoad = await newLoad.save();
+    res.status(201).json(savedLoad);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
