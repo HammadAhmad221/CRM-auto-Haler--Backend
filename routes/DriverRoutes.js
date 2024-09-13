@@ -89,9 +89,9 @@ router.delete('/:id',authenticateUser(['Admin']), async (req, res) => {
   }
 });
 
-router.get('/id-by-license/:licenseNumber', async (req, res) => {
+router.get('/id-by-email/:email', async (req, res) => {
   try {
-      const driver = await Driver.findOne({ licenseNumber: req.params.licenseNumber });
+      const driver = await Driver.findOne({ "contactDetails.email": req.params.email });
       if (!driver) {
           return res.status(404).json({ message: 'Driver not found' });
       }

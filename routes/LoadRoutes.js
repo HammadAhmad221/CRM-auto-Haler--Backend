@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
 // Get all loads
 router.get('/', async (req, res) => {
   try {
-    const loads = await Load.find();
+    const loads = await Load.find().populate('driverId','name');
     res.status(200).json(loads);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -39,7 +39,8 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const load = await Load.findById(id);
+    const load = await Load.findById(id).populate({  path: 'driverId',
+      select: 'name'})
     if (!load) return res.status(404).json({ message: 'Load not found' });
 
     res.status(200).json(load);

@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
 // Get all invoices
 router.get('/', async (req, res) => {
   try {
-    const invoices = await Invoice.find().populate('customerId', 'name').populate('loadId', 'description');
+    const invoices = await Invoice.find().populate('customerId', 'name').populate('loadId', 'pickupLocation');
     res.status(200).json(invoices);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -37,7 +37,8 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const invoice = await Invoice.findById(id).populate('customerId', 'name').populate('loadId', 'description');
+    const invoice = await Invoice.findById(id).populate({  path: 'customerId',
+      select: 'name address'}).populate('loadId', 'pickupLocation');
     if (!invoice) return res.status(404).json({ message: 'Invoice not found' });
 
     res.status(200).json(invoice);
@@ -77,6 +78,28 @@ router.delete('/:id', async (req, res) => {
     res.status(200).json({ message: 'Invoice deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+router.put('/invoices/:id', async (req, res) => {
+  try {
+      const { status } = req.body; // Status should be in the request body
+      const { id } = req.params; // ID of the document to update
+
+      const updatedInvoice = await Invoice.findByIdAndUpdate(
+          id, 
+          { status }, 
+          { new: true } // Return the updated document
+      ).populate('customerId').populate('loadId');
+
+      if (!updatedInvoice) {
+          return res.status(404).json({ message: 'Invoice not found' });
+      }
+
+      res.json(updatedInvoice);
+  } catch (error) {
+      console.error('Error updating invoice status:', error);
+      res.status(500).json({ message: 'Server error' });
   }
 });
 
