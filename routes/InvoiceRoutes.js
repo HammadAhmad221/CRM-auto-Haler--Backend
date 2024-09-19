@@ -1,9 +1,28 @@
 const router = require('express').Router();
 const Invoice = require('../models/Invoice');
 // const authenticateUser = require('../middlewares/verifyToken');
+const sendInvoiceEmail = require('../mail');
 
 
 // Create a new invoice
+// router.post('/', async (req, res) => {
+//   const { customerId, loadId, amount, status } = req.body;
+
+//   try {
+//     const newInvoice = new Invoice({
+//       customerId,
+//       loadId,
+//       amount,
+//       status,
+//     });
+
+//     const savedInvoice = await newInvoice.save();
+//     sendInvoiceEmail();
+//     res.status(201).json(savedInvoice);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
 router.post('/', async (req, res) => {
   const { customerId, loadId, amount, status } = req.body;
 
@@ -16,11 +35,28 @@ router.post('/', async (req, res) => {
     });
 
     const savedInvoice = await newInvoice.save();
-    res.status(201).json(savedInvoice);
+
+    const populatedInvoice = await Invoice.findById(savedInvoice._id)
+      .populate('customerId')
+      .populate('loadId');
+
+    const customerEmail = populatedInvoice.customerId.email;
+    const loadDetails = populatedInvoice.loadId;
+
+    await sendInvoiceEmail({
+      email: customerEmail,     
+      invoiceId: populatedInvoice._id, 
+      loadDetails: loadDetails, 
+      invoiceAmount: amount,    
+      invoiceStatus: status  
+    });
+    res.status(201).json(populatedInvoice);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
+
 
 // Get all invoices
 router.get('/', async (req, res) => {
