@@ -49,7 +49,9 @@ router.post('/login', async (req, res) => {
     if(!passwordMatch) return res.status(400).send('Email or Password do not match');
 
     // Create and assign JWT
-    const token = jwt.sign({_id: registeredUser._id,  role: registeredUser.role, registeredUser}, process.env.JWT_SECRET);
+    const token = jwt.sign({_id: registeredUser._id,
+        //   role: registeredUser.role,
+           registeredUser}, process.env.JWT_SECRET);
     res.header('Authorization', token).send(token);
 })
 

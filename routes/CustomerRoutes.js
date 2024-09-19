@@ -4,7 +4,7 @@ const Customer = require('../models/Customer');
 const authenticateUser = require('../middlewares/verifyToken');
 
 // Get all customers (Read)
-router.get('/', authenticateUser(['Admin']), async (req, res) => {
+router.get('/',   async (req, res) => {
   try {
     const customers = await Customer.find();
     res.json(customers);
@@ -14,7 +14,7 @@ router.get('/', authenticateUser(['Admin']), async (req, res) => {
 });
 
 // Get one customer by ID (Read)
-router.get('/:id', authenticateUser(['Admin']), async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const customer = await Customer.findById(req.params.id);
     if (!customer) return res.status(404).json({ message: 'Customer not found' });
@@ -25,7 +25,7 @@ router.get('/:id', authenticateUser(['Admin']), async (req, res) => {
 });
 
 // Create a new customer (Create)
-router.post('/', authenticateUser(['Admin']), async (req, res) => {
+router.post('/', async (req, res) => {
   const customer = new Customer({
     name: req.body.name,
     phone: req.body.phone,
@@ -44,7 +44,7 @@ router.post('/', authenticateUser(['Admin']), async (req, res) => {
 });
 
 // Update a customer by ID (Update)
-router.put('/:id', authenticateUser(['Admin']), async (req, res) => {
+router.put('/:id',   async (req, res) => {
   try {
     const updatedCustomer = await Customer.findByIdAndUpdate(
       req.params.id,
@@ -59,7 +59,7 @@ router.put('/:id', authenticateUser(['Admin']), async (req, res) => {
 });
 
 // Delete a customer by ID (Delete)
-router.delete('/:id', authenticateUser(['Admin']), async (req, res) => {
+router.delete('/:id',   async (req, res) => {
   try {
     const deletedCustomer = await Customer.findByIdAndDelete(req.params.id);
     if (!deletedCustomer) return res.status(404).json({ message: 'Customer not found' });

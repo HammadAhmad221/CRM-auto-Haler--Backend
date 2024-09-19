@@ -5,7 +5,7 @@ const authenticateUser = require('../middlewares/verifyToken');
 
 
 // Create a new driver
-router.post('/', authenticateUser(['Admin']), async (req, res) => {
+router.post('/',   async (req, res) => {
   const { name, licenseNumber, certifications, contactDetails } = req.body;
 
   try {
@@ -24,7 +24,7 @@ router.post('/', authenticateUser(['Admin']), async (req, res) => {
 });
 
 // Get all drivers
-router.get('/',authenticateUser(['Admin']), async (req, res) => {
+router.get('/',  async (req, res) => {
   try {
     const drivers = await Driver.find();
     res.status(200).json(drivers);
@@ -76,7 +76,7 @@ router.put('/:id', authenticateUser(['Admin','Driver']), async (req, res) => {
 });
 
 // Delete a driver by ID
-router.delete('/:id',authenticateUser(['Admin']), async (req, res) => {
+router.delete('/:id',  async (req, res) => {
   const { id } = req.params;
 
   try {

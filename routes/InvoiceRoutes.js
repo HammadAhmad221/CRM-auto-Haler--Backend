@@ -90,7 +90,7 @@ router.put('/invoices/:id', async (req, res) => {
           id, 
           { status }, 
           { new: true } // Return the updated document
-      ).populate('customerId').populate('loadId');
+      ).populate('customerId','name').populate('loadId');
 
       if (!updatedInvoice) {
           return res.status(404).json({ message: 'Invoice not found' });

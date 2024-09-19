@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 // const {registerValidation} = require('../validations.js');
 const authenticateUser = require('../middlewares/verifyToken');
 
-router.post('/', authenticateUser(['Admin']), async (req, res) => {
+router.post('/',   async (req, res) => {
   const { email, name, password, role } = req.body;
 
   try {
@@ -32,7 +32,7 @@ router.post('/', authenticateUser(['Admin']), async (req, res) => {
   }
 });
 
-router.get('/', authenticateUser(['Admin']), async (req, res) => {
+router.get('/',   async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -41,7 +41,7 @@ router.get('/', authenticateUser(['Admin']), async (req, res) => {
   }
 });
 
-router.get('/:id', authenticateUser(['Admin']), async (req, res) => {
+router.get('/:id',   async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -54,7 +54,7 @@ router.get('/:id', authenticateUser(['Admin']), async (req, res) => {
   }
 });
 
-router.put('/:id', authenticateUser(['Admin']), async (req, res) => {
+router.put('/:id',   async (req, res) => {
   const { id } = req.params;
   const { email, name, password, role } = req.body;
 
@@ -78,7 +78,7 @@ router.put('/:id', authenticateUser(['Admin']), async (req, res) => {
   }
 });
 
-router.delete('/:id', authenticateUser(['Admin']), async (req, res) => {
+router.delete('/:id',   async (req, res) => {
   const { id } = req.params;
 
   try {

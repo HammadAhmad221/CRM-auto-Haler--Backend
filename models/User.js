@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     role: { 
         type: String, 
         enum: ['Admin', 'Driver', 'Customer'], 
-        default: 'Driver' 
+        default: 'Admin' 
       },
     date: {
         type: Date,
