@@ -34,7 +34,7 @@ router.get('/',  async (req, res) => {
 });
 
 // Get a single driver by ID
-router.get('/:id',authenticateUser(['Admin','Driver']), async (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -48,7 +48,7 @@ router.get('/:id',authenticateUser(['Admin','Driver']), async (req, res) => {
 });
 
 // Update a driver by ID
-router.put('/:id', authenticateUser(['Admin','Driver']), async (req, res) => {
+router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { name, licenseNumber, certifications, contactDetails } = req.body;
 

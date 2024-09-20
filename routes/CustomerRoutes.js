@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Customer = require('../models/Customer');
-const authenticateUser = require('../middlewares/verifyToken');
+// const authenticateUser = require('../middlewares/verifyToken');
 
 // Get all customers (Read)
 router.get('/',   async (req, res) => {

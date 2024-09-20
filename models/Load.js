@@ -40,65 +40,59 @@ const mongoose = require('mongoose');
 const Counter = require('./Counter'); // Import the counter model
 
 const LoadSchema = new mongoose.Schema({
-    id: {
-        type: Number,
-        unique: true,
-    },
-    vehicleId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Vehicle',
-        required: true,
-    },
-    driverId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Driver',
-        required: true,
-    },
-    pickupLocation: {
-        type: String,
-        required: true,
-    },
-    deliveryLocation: {
-        type: String,
-        required: true,
-    },
-    loadDetails: {
-        type: String,
-    },
-    status: {
-        type: String,
-        enum: ['Assigned', 'In Progress', 'Delivered'],
-        default: 'Assigned',
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    }
+  loadId: {
+    type: Number,
+    unique: true,
+  },
+  vehicleId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Vehicle',
+    required: true,
+  },
+  driverId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Driver',
+    required: true,
+  },
+  pickupLocation: {
+    type: String,
+    required: true,
+  },
+  deliveryLocation: {
+    type: String,
+    required: true,
+  },
+  loadDetails: {
+    type: String,
+  },
+  status: {
+    type: String,
+    enum: ['Assigned', 'In Progress', 'Delivered'],
+    default: 'Assigned',
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-// Pre-save middleware to auto-increment the loadId before saving
+// Pre-save hook to auto-increment loadId
 LoadSchema.pre('save', async function (next) {
-    const load = this;
-
-    // Only auto-increment if the loadId field is not already set
-    if (!load.isNew || load.loadId) {
-        return next();
-    }
-
+  const load = this;
+  if (load.isNew) {
     try {
-        // Find the counter document for the "Load" model and increment the sequence
-        const counter = await Counter.findOneAndUpdate(
-            { model: 'Load' },
-            { $inc: { seq: 1 } }, // Increment the sequence by 1
-            { new: true, upsert: true } // Create the counter if it doesn't exist
-        );
-
-        // Set the loadId to the incremented sequence value
-        load.loadId = counter.seq;
-        next();
+      const counter = await Counter.findByIdAndUpdate(
+        { _id: 'loadId' }, // This will be the identifier for the counter
+        { $inc: { seq: 1 } }, // Increment the sequence by 1
+        { new: true, upsert: true } // Create the counter if it doesn't exist
+      );
+      load.loadId = counter.seq; // Assign the incremented value to loadId
     } catch (error) {
-        next(error);
+      return next(error);
     }
+  }
+  next();
 });
 
 module.exports = mongoose.model('Load', LoadSchema);
+

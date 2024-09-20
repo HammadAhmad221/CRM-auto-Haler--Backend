@@ -1,45 +1,3 @@
-// const nodemailer = require('nodemailer');
-
-// // Create a transporter object
-// const transporter = nodemailer.createTransport({
-//   host: 'smtp.gmail.com',  // Use your email provider's SMTP server (Gmail used here)
-//   port: 587,  // For TLS encryption
-//   secure: false,  // Set to true if using port 465 (SSL)
-//   auth: {
-//     user: 'hammadchahal123@gmail.com',  // Your email address
-//     pass: 'nauq uhcs nvdr kazz',  // Your email password or App password
-//   },
-// });
-
-// // Function to send email
-// const sendInvoiceEmail = (recipientEmail, invoiceDetails) => {
-//   const mailOptions = {
-//     from: 'hammadchahal123@gmail.com',  // Sender address
-//     to: recipientEmail,  // Recipient's email address
-//     subject: 'Invoice Status Update',  // Subject line
-//     html: `
-//       <p>Dear Customer,</p>
-//       <p>Your invoice with ID: <strong>${invoiceDetails._id}</strong> has been updated.</p>
-//       <p>Status: <strong>${invoiceDetails.status}</strong></p>
-//       <p>Amount: <strong>${invoiceDetails.amount}</strong></p>
-//       <p>Thank you for using our service.</p>
-//       <p>Best regards,</p>
-//       <p>MetaViz Pro</p>
-//     `,
-//   };
-
-//   // Send the email
-//   transporter.sendMail(mailOptions, (error, info) => {
-//     if (error) {
-//       console.error('Error sending email:', error);
-//     } else {
-//       console.log('Email sent:', info.response);
-//     }
-//   });
-// };
-
-// module.exports = sendInvoiceEmail;
-
 const nodemailer = require('nodemailer');
 
 // Function to send an email when the invoice is created
@@ -56,7 +14,7 @@ const sendInvoiceEmail = async ({ email, invoiceId, loadDetails, invoiceAmount, 
   // Email content
   const mailOptions = {
     from: 'hammadchahal123@gmail.com',
-    to: email,  // Customer's email
+    to: email, 
     subject: `Invoice #${invoiceId} Created`,
     text: `
       Hello,

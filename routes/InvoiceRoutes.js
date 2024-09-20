@@ -61,7 +61,7 @@ router.post('/', async (req, res) => {
 // Get all invoices
 router.get('/', async (req, res) => {
   try {
-    const invoices = await Invoice.find().populate('customerId', 'name').populate('loadId', 'pickupLocation');
+    const invoices = await Invoice.find().populate('customerId', 'name').populate({path:'loadId', select:'pickupLocation loadId deliveryLocation'});
     res.status(200).json(invoices);
   } catch (error) {
     res.status(500).json({ message: error.message });
