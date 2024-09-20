@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 // Function to send an email when the invoice is created
-const sendInvoiceEmail = async ({ email, invoiceId, loadDetails, invoiceAmount, invoiceStatus }) => {
+const sendInvoiceEmail = async ({ email, invoiceId, invoiceAmount, invoiceStatus }) => {
   // Create the email transporter
   const transporter = nodemailer.createTransport({
     service: 'gmail',

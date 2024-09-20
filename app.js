@@ -20,6 +20,7 @@ const customerRoutes = require('./routes/CustomerRoutes');
 const counts = require('./routes/counts');
 const driverDashboardRoutes = require("./routes/driverDashboardRoutes");
 const reportRoutes = require('./routes/reportRoutes');
+const inputMails = require('./routes/InboxMails');
 
 // -> Middlewares
 app.use(cors());
@@ -41,6 +42,7 @@ app.use('/api/customers',customerRoutes);
 app.use('/api/counts', counts );
 app.use('/api/driver-loads',driverDashboardRoutes);
 app.use('/api/reports',reportRoutes);
+app.use('/api',inputMails);
 
 
 mongoose.set('strictQuery', true);

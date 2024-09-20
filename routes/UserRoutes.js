@@ -2,7 +2,7 @@ const router = require('express').Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 // const {registerValidation} = require('../validations.js');
-const authenticateUser = require('../middlewares/verifyToken');
+// const authenticateUser = require('../middlewares/verifyToken');
 
 router.post('/',   async (req, res) => {
   const { email, name, password, role } = req.body;
