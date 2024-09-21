@@ -6,14 +6,14 @@ const sendInvoiceEmail = async ({ email, invoiceId, invoiceAmount, invoiceStatus
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'hammadchahal123@gmail.com',
-      pass: 'nauq uhcs nvdr kazz', // Use app password if you're using Gmail
+      user: 'dpointlogistics@gmail.com',
+      pass: 'hjrx jmxw twgi trnv', // Use app password if you're using Gmail
     },
   });
 
   // Email content
   const mailOptions = {
-    from: 'hammadchahal123@gmail.com',
+    from: 'dpointlogistics@gmail.com',
     to: email, 
     subject: `Invoice #${invoiceId} Created`,
     text: `

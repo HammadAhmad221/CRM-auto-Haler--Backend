@@ -4,9 +4,9 @@ const Imap = require('imap');
 const router = express.Router();
 
 // Configure your email and password
-const email = 'hammadchahal123@gmail.com';
-const password = 'nauq uhcs nvdr kazz'; // Use app password if you're using Gmail
-
+const email = 'dpointlogistics@gmail.com';
+// const password = 'nauq uhcs nvdr kazz'; 
+const password = 'hjrx jmxw twgi trnv';
 router.get('/emails', (req, res) => {
   const imap = new Imap({
     user: email,
