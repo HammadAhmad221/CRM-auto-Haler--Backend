@@ -1,41 +1,3 @@
-// const mongoose = require('mongoose');
-
-// const LoadSchema = new mongoose.Schema({
-//     vehicleId: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: 'Vehicle',
-//         required: true,
-//     },
-//     driverId: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: 'Driver',
-//         required: true,
-//     },
-//     pickupLocation: {
-//         type: String,
-//         required: true,
-//     },
-//     deliveryLocation: {
-//         type: String,
-//         required: true,
-//     },
-//     loadDetails: {
-//         type: String,
-//     },
-//     status: {
-//         type: String,
-//         enum:['Assigned', 'In Progress', 'Delivered'],
-//         default: 'Assigned',
-//     },
-//     date: {
-//         type: Date,
-//         default: Date.now
-//     }
-// });
-
-// module.exports = mongoose.model('Load', LoadSchema);
-
-
 const mongoose = require('mongoose');
 const Counter = require('./Counter'); // Import the counter model
 
@@ -49,10 +11,19 @@ const LoadSchema = new mongoose.Schema({
     ref: 'Vehicle',
     required: true,
   },
+  customerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Customer',
+    required: true,
+  },
   driverId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Driver',
     required: true,
+  },
+  amount:{
+    type:Number,
+    require:true,
   },
   pickupLocation: {
     type: String,

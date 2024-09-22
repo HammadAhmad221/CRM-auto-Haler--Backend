@@ -5,7 +5,7 @@ const Vehicle = require('../models/Vehicle');
 
 // Create a new vehicle
 router.post('/', async (req, res) => {
-  const { make, model, year, vin, specialInstructions, status, conditionReport  } = req.body;
+  const { make, model, year, vin, specialInstructions, conditionReport  } = req.body;
 
   try {
     const newVehicle = new Vehicle({
@@ -14,7 +14,6 @@ router.post('/', async (req, res) => {
       year,
       vin,
       specialInstructions,
-      status,
       conditionReport 
     });
 
@@ -52,12 +51,12 @@ router.get('/:id', async (req, res) => {
 // Update a vehicle by ID
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { make, model, year, vin, specialInstructions, status, conditionReport } = req.body;
+  const { make, model, year, vin, specialInstructions, conditionReport } = req.body;
 
   try {
     const updatedVehicle = await Vehicle.findByIdAndUpdate(
       id,
-      { make, model, year, vin, specialInstructions, status, conditionReport },
+      { make, model, year, vin, specialInstructions, conditionReport },
       { new: true }
     );
 

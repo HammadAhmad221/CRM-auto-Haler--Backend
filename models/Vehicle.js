@@ -8,9 +8,9 @@ const vehicleSchema = new mongoose.Schema({
   //  unique: true 
     },
 specialInstructions: {type: String, require: true},
-  status: { type: String,
-     enum: ['pending', 'picked-up', 'in-transit', 'delivered'],
-      default: 'pending' },
+  // status: { type: String,
+  //    enum: ['pending', 'picked-up', 'in-transit', 'delivered'],
+  //     default: 'pending' },
   conditionReport:{
       conditionAtPickup: String,
       conditionAtDelivery: String,

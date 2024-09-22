@@ -5,7 +5,7 @@ const Load = require('../models/Load');
 
 // Create a new load
 router.post('/', async (req, res) => {
-  const { loadDetails, pickupLocation, deliveryLocation, status, vehicleId, driverId } = req.body;
+  const { loadDetails, pickupLocation, deliveryLocation, status, vehicleId, driverId, customerId, amount } = req.body;
 
   try {
     const newLoad = new Load({
@@ -15,6 +15,8 @@ router.post('/', async (req, res) => {
       status,
       vehicleId,
       driverId,
+      customerId,
+      amount,
     });
 
     const savedLoad = await newLoad.save();
@@ -27,7 +29,7 @@ router.post('/', async (req, res) => {
 // Get all loads
 router.get('/', async (req, res) => {
   try {
-    const loads = await Load.find().populate('driverId','name').populate('vehicleId','make');
+    const loads = await Load.find().populate('driverId','name').populate('vehicleId','make').populate('customerId','name');
     res.status(200).json(loads);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -40,7 +42,7 @@ router.get('/:id', async (req, res) => {
 
   try {
     const load = await Load.findById(id).populate({  path: 'driverId',
-      select: 'name'}).populate({path:'vehicleId',select:'make'})
+      select: 'name'}).populate({path:'vehicleId',select:'make'}).populate('customerId','name')
     if (!load) return res.status(404).json({ message: 'Load not found' });
 
     res.status(200).json(load);
@@ -52,12 +54,12 @@ router.get('/:id', async (req, res) => {
 // Update a load by ID
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { loadDetails, pickupLocation, deliveryLocation, status, vehicleId, driverId } = req.body;
+  const { loadDetails, pickupLocation, deliveryLocation, status, vehicleId, driverId, customerId, amount } = req.body;
 
   try {
     const updatedLoad = await Load.findByIdAndUpdate(
       id,
-      { loadDetails, pickupLocation, deliveryLocation, status, vehicleId, driverId },
+      { loadDetails, pickupLocation, deliveryLocation, status, vehicleId, driverId, customerId, amount },
       { new: true }
     );
 

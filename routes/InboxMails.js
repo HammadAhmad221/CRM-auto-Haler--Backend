@@ -1,6 +1,5 @@
 const express = require('express');
 const Imap = require('imap');
-
 const router = express.Router();
 
 // Configure your email and password
@@ -51,14 +50,14 @@ router.get('/emails', (req, res) => {
             });
             stream.on('end', () => {
               const parsedEmail = Imap.parseHeader(buffer);
-              console.log('Parsed email:', parsedEmail); // Log the parsed email
+              // console.log('Parsed email:', parsedEmail); // Log the parsed email
               emails.push(parsedEmail);
             });
           });
         });
 
         f.on('end', () => {
-          console.log('All emails fetched:', emails); // Log all fetched emails
+          // console.log('All emails fetched:', emails); 
           imap.end();
           return res.status(200).json(emails.length ? emails : { message: 'No emails found' });
         });
