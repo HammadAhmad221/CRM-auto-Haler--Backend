@@ -6,6 +6,9 @@ const router = express.Router();
 const email = 'dpointlogistics@gmail.com';
 // const password = 'nauq uhcs nvdr kazz'; 
 const password = 'hjrx jmxw twgi trnv';
+//Email Subject Check
+const invoiceSubjectRegex = /^Invoice #[a-z0-9]+ Created$/i;
+
 router.get('/emails', (req, res) => {
   const imap = new Imap({
     user: email,
@@ -14,12 +17,14 @@ router.get('/emails', (req, res) => {
     port: 993,
     tls: true,
     tlsOptions: {
-      rejectUnauthorized: false, // Ignore self-signed certificate errors
+      rejectUnauthorized: false,
     },
+    connTimeout: 30000,
+    authTimeout: 30000,
   });
 
   imap.once('ready', () => {
-    imap.openBox('INBOX', true, (err, box) => {
+    imap.openBox('[Gmail]/Sent Mail', true, (err, box) => {
       if (err) {
         console.error('Error opening inbox:', err);
         return res.status(500).json({ message: 'Error opening inbox', error: err });
@@ -38,11 +43,11 @@ router.get('/emails', (req, res) => {
         }
 
         // Limit to the last 10 emails
-        const limitedResults = results.slice(-21);
+        const limitedResults = results.slice(-50);
         const f = imap.fetch(limitedResults, { bodies: '' });
         const emails = [];
 
-        f.on('message', (msg, seqno) => {
+        f.on('message', (msg) => {
           msg.on('body', (stream) => {
             let buffer = '';
             stream.on('data', (chunk) => {
@@ -50,8 +55,18 @@ router.get('/emails', (req, res) => {
             });
             stream.on('end', () => {
               const parsedEmail = Imap.parseHeader(buffer);
-              // console.log('Parsed email:', parsedEmail); // Log the parsed email
-              emails.push(parsedEmail);
+              // console.log('Parsed email:', parsedEmail);
+              const subject = parsedEmail.subject ? parsedEmail.subject[0] : '';
+
+              // Test if the subject matches the regex for "Invoice #<ID> Created"
+              if (invoiceSubjectRegex.test(subject)){
+                emails.push(parsedEmail)
+                emails.sort((a, b) => {
+                  const dateA = new Date(a.date[0]); // Convert to Date object
+                  const dateB = new Date(b.date[0]); // Convert to Date object
+                  return dateB - dateA; // Sort in descending order
+                });
+              }
             });
           });
         });

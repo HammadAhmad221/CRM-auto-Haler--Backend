@@ -1,7 +1,7 @@
 {
-  "name": "express-jwt",
+  "name": "crm-autohaler",
   "version": "1.0.0",
-  "description": "An express REST API boilerplate with JWT authentication",
+  "description": "Admin dashboard for auto halers",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
