@@ -30,9 +30,9 @@ router.post('/', async (req, res) => {
     name: req.body.name,
     phone: req.body.phone,
     email: req.body.email,
-    address: req.body.address,
-    history: req.body.history,
-    leads: req.body.leads,
+    // address: req.body.address,
+    // history: req.body.history,
+    // leads: req.body.leads,
   });
 
   try {

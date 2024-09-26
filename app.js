@@ -21,6 +21,7 @@ const counts = require('./routes/counts');
 const driverDashboardRoutes = require("./routes/driverDashboardRoutes");
 const reportRoutes = require('./routes/reportRoutes');
 const inputMails = require('./routes/InboxMails');
+const fetchEmailsAndSaveLeads = require('./autoGenerateCustomers/sitegroundCustomers');
 
 // -> Middlewares
 app.use(cors());
@@ -50,6 +51,11 @@ mongoose.set('strictQuery', true);
 mongoose.connect(process.env.DB_URL, () => {
   console.log("Connected to Database");
 });
+
+//autogenerate Customers
+setInterval(fetchEmailsAndSaveLeads,300000);
+// fetchEmailsAndSaveLeads();
+
 
 // Starting the server
 app.listen(process.env.PORT, () => {

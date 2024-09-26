@@ -4,10 +4,8 @@ const vehicleSchema = new mongoose.Schema({
   make: { type: String, required: true },
   model: { type: String, required: true },
   year: { type: Number, required: true },
-  vin: { type: String, required: true
-  //  unique: true 
-    },
-specialInstructions: {type: String, require: true},
+  vin: { type: String},
+specialInstructions: {type: String},
   // status: { type: String,
   //    enum: ['pending', 'picked-up', 'in-transit', 'delivered'],
   //     default: 'pending' },
