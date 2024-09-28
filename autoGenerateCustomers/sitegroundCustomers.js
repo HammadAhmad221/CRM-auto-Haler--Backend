@@ -52,12 +52,12 @@ const fetchEmailsAndSaveLeads =()=>{
         const modelMatch = emailBody.match(/Model:\s*(.*)/);
 
 
-        const name = nameMatch ? nameMatch[1].trim() : 'N/A';
-        const email = emailMatch ? emailMatch[1].trim() : 'N/A';
-        const phone = phoneMatch ? phoneMatch[1].trim() : 'N/A';
-        const year = phoneMatch ? yearMatch[1].trim() : 'N/A';
-        const make = phoneMatch ? makeMatch[1].trim() : 'N/A';
-        const model = phoneMatch ? modelMatch[1].trim() : 'N/A';
+        const name = nameMatch && nameMatch[1].trim();
+        const email = emailMatch && emailMatch[1].trim();
+        const phone = phoneMatch && phoneMatch[1].trim();
+        const year = phoneMatch && yearMatch[1].trim();
+        const make = phoneMatch && makeMatch[1].trim();
+        const model = phoneMatch && modelMatch[1].trim();
         
         if (name && email && phone) {
           try{

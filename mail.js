@@ -33,7 +33,6 @@ const sendInvoiceEmail = async ({ email, invoiceId, invoiceAmount, invoiceStatus
     `,
   };
 
-  // Send the email
   try {
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully');

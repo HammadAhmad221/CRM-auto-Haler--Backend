@@ -7,8 +7,6 @@ const Driver = require('../models/Driver');
 const Vehicle = require('../models/Vehicle');
 const Load = require('../models/Load');
 const Invoice = require('../models/Invoice');
-const Quote = require('../models/Qoute');
-const CommunicationLog = require('../models/CommunicationLog');
 
 
 router.get('/', async (req, res) => {
@@ -20,9 +18,6 @@ router.get('/', async (req, res) => {
         Vehicle.countDocuments(),
         Load.countDocuments(),
         Invoice.countDocuments(),
-        Quote.countDocuments(),
-        CommunicationLog.countDocuments(),
-
       ]);
 
       const result = {
@@ -32,8 +27,7 @@ router.get('/', async (req, res) => {
           vehicle: counts[3],
           load: counts[4],
           invoice: counts[5],
-          quote: counts[6],
-          communicationlog: counts[7],
+
       };
 
       res.status(200).json({ result });
