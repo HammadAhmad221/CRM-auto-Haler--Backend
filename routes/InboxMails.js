@@ -5,7 +5,7 @@ const router = express.Router();
 // Configure your email and password
 const email = 'dpointlogistics@gmail.com';
 // const password = 'nauq uhcs nvdr kazz'; 
-const password = 'hjrx jmxw twgi trnv';
+const password = process.env.GMAIL_PASS;
 //Email Subject Check
 const invoiceSubjectRegex = /^Invoice #[a-z0-9]+ Created$/i;
 

@@ -7,7 +7,7 @@ const sendInvoiceEmail = async ({ email, invoiceId, invoiceAmount, invoiceStatus
     service: 'gmail',
     auth: {
       user: 'dpointlogistics@gmail.com',
-      pass: 'hjrx jmxw twgi trnv', // Use app password if you're using Gmail
+      pass: process.env.GMAIL_PASS,
     },
   });
 

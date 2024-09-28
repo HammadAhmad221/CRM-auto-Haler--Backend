@@ -5,7 +5,7 @@ const vehicle = require('../models/Vehicle');
 const config = {
   imap: {
     user: 'info@blacklinetransportation.us',
-    password: 'Bigboss12!',
+    password: process.env.WEBMAIL_PASS,
     host: 'gtxm1192.siteground.biz',
     port: 993,
     tls: true,
