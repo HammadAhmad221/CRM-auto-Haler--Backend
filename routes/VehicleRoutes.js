@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
 // Get all vehicles
 router.get('/', async (req, res) => {
   try {
-    const vehicles = await Vehicle.find();
+    const vehicles = await Vehicle.find().populate('customer', 'name email phone');
     res.status(200).json(vehicles);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -37,7 +37,7 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const vehicle = await Vehicle.findById(id);
+    const vehicle = await Vehicle.findById(id).populate('customer', 'name email phone');
     if (!vehicle) return res.status(404).json({ message: 'Vehicle not found' });
 
     res.status(200).json(vehicle);

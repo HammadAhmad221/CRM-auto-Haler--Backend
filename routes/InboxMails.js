@@ -3,16 +3,16 @@ const Imap = require('imap');
 const router = express.Router();
 
 // Configure your email and password
-const email = 'dpointlogistics@gmail.com';
+// const email = 'dpointlogistics@gmail.com';
 // const password = 'nauq uhcs nvdr kazz'; 
-const password = process.env.GMAIL_PASS;
+// const password = process.env.GMAIL_PASS;
 //Email Subject Check
 const invoiceSubjectRegex = /^Invoice #[a-z0-9]+ Created$/i;
 
 router.get('/emails', (req, res) => {
   const imap = new Imap({
-    user: email,
-    password: password,
+    user: 'dpointlogistics@gmail.com',
+    password: process.env.GMAIL_PASS,
     host: 'imap.gmail.com',
     port: 993,
     tls: true,
