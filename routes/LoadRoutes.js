@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 // Get all loads
 router.get('/', async (req, res) => {
   try {
-    const loads = await Load.find().populate('driverId','name').populate('vehicleId','make').populate('customerId','name');
+    const loads = await Load.find().populate('driverId','name').populate('vehicleId','make model year vin').populate('customerId','name');
     res.status(200).json(loads);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -42,7 +42,7 @@ router.get('/:id', async (req, res) => {
 
   try {
     const load = await Load.findById(id).populate({  path: 'driverId',
-      select: 'name'}).populate({path:'vehicleId',select:'make'}).populate('customerId','name')
+      select: 'name'}).populate({path:'vehicleId',select:'make model year'}).populate('customerId','name email phone').populate('invoiceId',"invoiceId")
     if (!load) return res.status(404).json({ message: 'Load not found' });
 
     res.status(200).json(load);

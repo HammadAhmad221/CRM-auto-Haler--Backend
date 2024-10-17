@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Counter = require('./Counter'); // Import the counter model
+const Counter = require('./Counter');
 
 const LoadSchema = new mongoose.Schema({
   loadId: {
@@ -19,11 +19,18 @@ const LoadSchema = new mongoose.Schema({
   driverId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Driver',
-    required: true,
+    default: null,
+    // required: true,
+  },
+  invoiceId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Invoice',
+    default: null,
   },
   amount:{
     type:Number,
-    require:true,
+    default: null,
+    // require:true,
   },
   pickupLocation: {
     type: String,
@@ -38,8 +45,8 @@ const LoadSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Assigned', 'In Progress', 'Delivered'],
-    default: 'Assigned',
+    enum: ['Assigned', 'In Progress', 'Delivered', 'Pending'],
+    default: 'Pending',
   },
   date: {
     type: Date,

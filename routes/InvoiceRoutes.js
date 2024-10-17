@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Invoice = require('../models/Invoice');
+const Load = require("../models/Load");
 const sendInvoiceEmail = require('../mail');
 
 router.post('/', async (req, res) => {
@@ -14,12 +15,16 @@ router.post('/', async (req, res) => {
     });
 
     const savedInvoice = await newInvoice.save();
+    // console.log("saved ");
+    const saved = await Load.findByIdAndUpdate(loadId, { invoiceId: newInvoice._id });
+    // console.log(saved);
 
     const populatedInvoice = await Invoice.findById(savedInvoice._id)
       .populate('customerId')
       .populate('loadId');
 
     const customerEmail = populatedInvoice.customerId.email;
+    // console.log("customer email",customerEmail);
     const loadDetails = populatedInvoice.loadId;
 
     await sendInvoiceEmail({
