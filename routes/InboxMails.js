@@ -7,7 +7,8 @@ const router = express.Router();
 // const password = 'nauq uhcs nvdr kazz'; 
 // const password = process.env.GMAIL_PASS;
 //Email Subject Check
-const invoiceSubjectRegex = /^Invoice #[a-z0-9]+ Created$/i;
+// const invoiceSubjectRegex = /^Invoice\s#[0-9]+\sCreated$/;
+const invoiceSubjectRegex = /^Your\sInvoice\sis\screated\sby\sID#[0-9]+$/;
 
 router.get('/emails', (req, res) => {
   const imap = new Imap({

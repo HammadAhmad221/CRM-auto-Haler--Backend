@@ -10,18 +10,22 @@ router.post('/', async (req, res) => {
     const newInvoice = new Invoice({
       customerId,
       loadId,
-      amount,
+      // amount,
       status,
     });
 
     const savedInvoice = await newInvoice.save();
     // console.log("saved ");
-    const saved = await Load.findByIdAndUpdate(loadId, { invoiceId: newInvoice._id });
+    await Load.findByIdAndUpdate(loadId, { invoiceId: newInvoice._id });
     // console.log(saved);
 
     const populatedInvoice = await Invoice.findById(savedInvoice._id)
       .populate('customerId')
       .populate('loadId');
+
+      await Invoice.findByIdAndUpdate(savedInvoice._id,{amount:populatedInvoice.loadId.amount});
+
+      // console.log("Subject invoices",populatedInvoice);
 
     const customerEmail = populatedInvoice.customerId.email;
     // console.log("customer email",customerEmail);
@@ -29,10 +33,11 @@ router.post('/', async (req, res) => {
 
     await sendInvoiceEmail({
       email: customerEmail,     
-      invoiceId: populatedInvoice._id, 
+      invoiceId: populatedInvoice._id,
       loadDetails: loadDetails, 
-      invoiceAmount: amount,    
-      invoiceStatus: status  
+      invoiceAmount: populatedInvoice.loadId.amount,    
+      invoiceStatus: status,
+      invoiceIdN:populatedInvoice.invoiceId,
     });
     res.status(201).json(populatedInvoice);
   } catch (error) {
