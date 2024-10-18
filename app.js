@@ -34,7 +34,6 @@ app.use('/api/customers',customerRoutes);
 app.use('/api/counts', counts );
 app.use('/api',inputMails);
 
-
 mongoose.set('strictQuery', true);
 // Connect to Database
 mongoose.connect(process.env.DB_URL, () => {

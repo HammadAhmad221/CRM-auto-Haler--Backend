@@ -58,14 +58,20 @@ router.get('/emails', (req, res) => {
               const parsedEmail = Imap.parseHeader(buffer);
               // console.log('Parsed email:', parsedEmail);
               const subject = parsedEmail.subject ? parsedEmail.subject[0] : '';
+              // console.log("subject",subject);
 
-              // Test if the subject matches the regex for "Invoice #<ID> Created"
               if (invoiceSubjectRegex.test(subject)){
                 emails.push(parsedEmail)
+                // emails.sort((a, b) => {
+                //   const dateA = new Date(a.date[0]);
+                //   const dateB = new Date(b.date[0]);
+                //   return dateB - dateA;
+                // });
                 emails.sort((a, b) => {
-                  const dateA = new Date(a.date[0]); // Convert to Date object
-                  const dateB = new Date(b.date[0]); // Convert to Date object
-                  return dateB - dateA; // Sort in descending order
+                  const numberInA = parseInt(a.subject[0].match(/#(\d+)/)[1], 10); // Extract the number after #
+                  const numberInB = parseInt(b.subject[0].match(/#(\d+)/)[1], 10); // Extract the number after #
+                  
+                  return numberInB - numberInA; // Sort in descending order
                 });
               }
             });
