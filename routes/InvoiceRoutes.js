@@ -55,6 +55,30 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get total amount for Paid and Unpaid invoices
+router.get('/summary', async (req, res) => {
+  try {
+    const result = await Invoice.aggregate([
+      {
+        $group: {
+          _id: '$status', // Group by 'status' (Paid, Unpaid)
+          totalAmount: { $sum: '$amount' }, // Sum 'amount' field for each group
+        },
+      },
+    ]);
+
+    // Format the response into a more user-friendly structure
+    const summary = {
+      totalPaid: result.find(r => r._id === 'Paid')?.totalAmount || 0,
+      totalUnpaid: result.find(r => r._id === 'Unpaid')?.totalAmount || 0,
+    };
+
+    res.json(summary);
+  } catch (error) {
+    console.error('Error fetching invoice summary:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 // router.get('/stats', async (req, res) => {
 //   const { startDate, endDate, status } = req.query;
 

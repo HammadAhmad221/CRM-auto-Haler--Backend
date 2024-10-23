@@ -22,7 +22,7 @@ const sendInvoiceEmail = async ({ email, invoiceId, invoiceAmount, invoiceStatus
       Your invoice has been created with the following details:
 
       Invoice ID: ${invoiceIdN}
-      Amount: ${invoiceAmount}
+      Amount: $${invoiceAmount}.00
       Status: ${invoiceStatus}
 
       click the below link to view and download your Invoice:

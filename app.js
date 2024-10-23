@@ -15,6 +15,7 @@ const userRoutes = require('./routes/UserRoutes');
 const customerRoutes = require('./routes/CustomerRoutes');
 const counts = require('./routes/counts');
 const inputMails = require('./routes/InboxMails');
+const countMails = require('./routes/countEmails');
 const fetchEmailsAndSaveLeads = require('./autoGenerateCustomers/sitegroundCustomers');
 
 // -> Middlewares
@@ -33,6 +34,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/customers',customerRoutes);
 app.use('/api/counts', counts );
 app.use('/api',inputMails);
+app.use('/emails',countMails);
+
 
 mongoose.set('strictQuery', true);
 // Connect to Database
