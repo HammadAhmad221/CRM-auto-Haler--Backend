@@ -341,6 +341,7 @@ module.exports = fetchEmailsAndSaveLeads;
 
 // generate whole lead code ends here
 
+
 // const imaps = require("imap-simple");
 // const Customer = require("../models/Customer");
 // const Vehicle = require("../models/Vehicle");
@@ -357,18 +358,13 @@ module.exports = fetchEmailsAndSaveLeads;
 //   },
 // };
 
-// // Function to fetch emails in batches and save leads
-// const fetchEmailsInBatches = async (
-//   connection,
-//   startUID = 1,
-//   batchSize = 100
-// ) => {
+// const fetchEmailsInBatches = async (connection, startUID = 1, batchSize = 100) => {
 //   let allEmailsFetched = false;
 
 //   while (!allEmailsFetched) {
 //     const endUID = startUID + batchSize - 1;
 //     const searchCriteria = [
-//       ["UID", `${startUID}:${endUID}`], // Fetch emails in a batch by UID range
+//       ["UID", `${startUID}:${endUID}`],
 //     ];
 //     const fetchOptions = {
 //       bodies: ["HEADER", "TEXT"],
@@ -431,35 +427,31 @@ module.exports = fetchEmailsAndSaveLeads;
 
 //           if (name && email && phone) {
 //             try {
-//               // Check if customer exists
 //               let existingCustomer = await Customer.findOne({ email });
 
 //               if (!existingCustomer) {
-//                 // Create new customer
 //                 existingCustomer = new Customer({ name, email, phone });
 //                 await existingCustomer.save();
 //                 console.log(`New customer saved: ${name}, Email: ${email}`);
 //               }
 
 //               if (year && make && model) {
-//                 // Save vehicle and link it to customer
 //                 const newVehicle = new Vehicle({
 //                   year,
 //                   make,
 //                   model,
-//                   customer: existingCustomer._id, // Link customer to vehicle
+//                   customer: existingCustomer._id,
 //                 });
 //                 await newVehicle.save();
 //                 console.log(
 //                   `New vehicle saved: Year: ${year}, Make: ${make}, Model: ${model}, Customer: ${existingCustomer.name}`
 //                 );
 
-//                 // Create Load and link customer and vehicle
 //                 const newLoad = new Load({
 //                   deliveryLocation,
 //                   pickupLocation,
-//                   customerId: existingCustomer._id, // Link customer to load
-//                   vehicleId: newVehicle._id, // Link vehicle to load
+//                   customerId: existingCustomer._id,
+//                   vehicleId: newVehicle._id,
 //                   amount: null,
 //                   driver: null,
 //                   status: "Pending",
@@ -481,14 +473,11 @@ module.exports = fetchEmailsAndSaveLeads;
 //         }
 //       }
 
-//       // Update startUID to fetch the next batch
 //       const lastEmail = messages[messages.length - 1];
 //       startUID = lastEmail.attributes.uid + 1;
 
-//       // Stop fetching if the number of emails in this batch is less than batchSize
-//       if (messages.length < batchSize) {
-//         allEmailsFetched = true;
-//       }
+//       console.log(`Next batch will start from UID: ${startUID}`);
+
 //     } catch (error) {
 //       console.error("Error fetching batch of emails: ", error);
 //       break;
@@ -496,14 +485,12 @@ module.exports = fetchEmailsAndSaveLeads;
 //   }
 // };
 
-// // Main function to connect to IMAP and fetch emails
 // const fetchEmailsAndSaveLeads = async () => {
 //   imaps
 //     .connect(config)
 //     .then(async (connection) => {
 //       try {
 //         await connection.openBox("INBOX");
-//         // Fetch emails in batches
 //         await fetchEmailsInBatches(connection);
 //       } catch (error) {
 //         console.error("Error fetching emails: ", error);
@@ -515,3 +502,7 @@ module.exports = fetchEmailsAndSaveLeads;
 // };
 
 // module.exports = fetchEmailsAndSaveLeads;
+
+
+// latest code
+
