@@ -4,14 +4,42 @@ const Customer = require('../models/Customer');
 // const authenticateUser = require('../middlewares/verifyToken');
 
 // Get all customers (Read)
-router.get('/',   async (req, res) => {
+// router.get('/',   async (req, res) => {
+//   try {
+//     const customers = await Customer.find();
+//     res.json(customers);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+router.get('/', async (req, res) => {
   try {
-    const customers = await Customer.find();
-    res.json(customers);
+    // Get query parameters for pagination
+    const page = parseInt(req.query.page); // Default to page 1
+    const limit = parseInt(req.query.limit);
+    const skip = (page - 1) * limit;
+
+    // Fetch customers with pagination and sorting (latest first)
+    const customers = await Customer.find()
+      .sort({ createdAt: -1 }) // Sort by latest first
+      .skip(skip)
+      .limit(limit);
+
+    // Get total count for pagination metadata
+    const totalRecords = await Customer.countDocuments();
+
+    res.json({
+      data: customers,
+      currentPage: page,
+      totalPages: Math.ceil(totalRecords / limit),
+      totalRecords,
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 // Get one customer by ID (Read)
 router.get('/:id', async (req, res) => {

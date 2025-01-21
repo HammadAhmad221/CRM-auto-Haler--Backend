@@ -43,7 +43,7 @@ mongoose.connect(process.env.DB_URL, () => {
 });
 
 //autogenerate Customers
-setInterval(fetchEmailsAndSaveLeads, 30000);
+// setInterval(fetchEmailsAndSaveLeads, 30000);
 // fetchEmailsAndSaveLeads();
 
 // Starting the server
