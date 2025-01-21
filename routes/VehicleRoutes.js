@@ -2,6 +2,48 @@ const router = require('express').Router();
 const Vehicle = require('../models/Vehicle');
 // const authenticateUser = require('../middlewares/verifyToken');
 
+// Get all vehicles
+// router.get('/', async (req, res) => {
+//   try {
+//     const vehicles = await Vehicle.find().populate('customer', 'name email phone');
+//     res.status(200).json(vehicles);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
+
+router.get('/', async (req, res) => {
+  try {
+    // Get query parameters for pagination
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const skip = (page - 1) * limit;
+
+    // Fetch vehicles with pagination and populate the customer field
+    const vehicles = await Vehicle.find()
+      .populate('customer', 'name email phone')
+      .sort({ createdAt: -1 }) // Sort by latest first (optional)
+      .skip(skip)
+      .limit(limit);
+
+    // Get total count for pagination metadata
+    const totalRecords = await Vehicle.countDocuments();
+
+    // Calculate total pages
+    const totalPages = Math.ceil(totalRecords / limit);
+
+    // Return vehicles data with pagination info
+    res.status(200).json({
+      data: vehicles,
+      currentPage: page,
+      totalPages,
+      totalRecords,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 // Create a new vehicle
 router.post('/', async (req, res) => {
@@ -17,16 +59,6 @@ router.post('/', async (req, res) => {
 
     const savedVehicle = await newVehicle.save();
     res.status(201).json(savedVehicle);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Get all vehicles
-router.get('/', async (req, res) => {
-  try {
-    const vehicles = await Vehicle.find().populate('customer', 'name email phone');
-    res.status(200).json(vehicles);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

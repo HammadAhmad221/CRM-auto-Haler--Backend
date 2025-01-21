@@ -3,6 +3,41 @@ const Load = require('../models/Load');
 // const authenticateUser = require('../middlewares/verifyToken');
 
 
+// Get all loads
+// router.get('/', async (req, res) => {
+//   try {
+//     const loads = await Load.find().populate('driverId','name').populate('vehicleId','make model year vin').populate('customerId','name');
+//     res.status(200).json(loads);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
+
+router.get('/', async (req, res) => {
+  const { page, limit } = req.query;
+  const skip = (page - 1) * limit;
+
+  try {
+    const loads = await Load.find()
+      .skip(skip)
+      .limit(parseInt(limit))
+      .populate('driverId', 'name')
+      .populate('vehicleId', 'make model year vin')
+      .populate('customerId', 'name');
+    const total = await Load.countDocuments();
+
+    res.status(200).json({
+      data: loads,
+      total,
+      page: parseInt(page),
+      totalPages: Math.ceil(total / limit),
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
 // Create a new load
 router.post('/', async (req, res) => {
   const { loadDetails, pickupLocation, deliveryLocation, status, vehicleId, driverId, customerId, amount } = req.body;
@@ -21,16 +56,6 @@ router.post('/', async (req, res) => {
 
     const savedLoad = await newLoad.save();
     res.status(201).json(savedLoad);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Get all loads
-router.get('/', async (req, res) => {
-  try {
-    const loads = await Load.find().populate('driverId','name').populate('vehicleId','make model year vin').populate('customerId','name');
-    res.status(200).json(loads);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
