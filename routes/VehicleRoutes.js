@@ -2,16 +2,6 @@ const router = require('express').Router();
 const Vehicle = require('../models/Vehicle');
 // const authenticateUser = require('../middlewares/verifyToken');
 
-// Get all vehicles
-// router.get('/', async (req, res) => {
-//   try {
-//     const vehicles = await Vehicle.find().populate('customer', 'name email phone');
-//     res.status(200).json(vehicles);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
-
 router.get('/', async (req, res) => {
   try {
     // Get query parameters for pagination
@@ -47,14 +37,13 @@ router.get('/', async (req, res) => {
 
 // Create a new vehicle
 router.post('/', async (req, res) => {
-  const { make, model, year, } = req.body;
+  const { make, model, year } = req.body;
 
   try {
     const newVehicle = new Vehicle({
       make,
       model,
-      year,
-      vin,
+      year
     });
 
     const savedVehicle = await newVehicle.save();
